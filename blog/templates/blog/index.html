@@ -5,6 +5,9 @@
 		<title>Hello</title>
 	</head>
 	<body>
-		<h2>abra - cfd</h2>
+	{% for p in pub_post %}
+		<li>  {{ p.title }}</li>
+	{% endfor %}
+
 	</body>
 </html>
