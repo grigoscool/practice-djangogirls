@@ -1,0 +1,14 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+{% block content %}
+{% if user.is_authenticated %}
+	<form action="#post_new" method="post">
+			{% csrf_token %}
+			{{ form.as_p }}
+
+		<input type="submit" value="Send">
+{% else %}
+		<p>no rules</p>
+{% endif %}
+</form>
+{% endblock content %}
