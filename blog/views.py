@@ -4,10 +4,10 @@ from django.utils import timezone
 from .models import Post
 
 def index(request):
-    posts = Post.objects.filter(published_date__lte=timezone.now()).order_by("-created_date")
-    pub_post = []
-    for post in posts:
+    pub_posts = Post.objects.filter(published_date__lte=timezone.now()).order_by("-created_date")
+    posts = []
+    for post in pub_posts:
         if post.published_date:
-            pub_post.append(post)
-    context = {'pub_post': pub_post}
+            posts.append(post)
+    context = {'posts': posts}
     return render(request, 'blog/index.html', context)
