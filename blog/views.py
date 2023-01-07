@@ -6,11 +6,7 @@ from .models import Post
 
 
 def index(request):
-    pub_posts = Post.objects.filter(published_date__lte=timezone.now()).order_by("-created_date")
-    posts = []
-    for post in pub_posts:
-        if post.published_date:
-            posts.append(post)
+    posts = Post.objects.all().order_by("-created_date")
     context = {'posts': posts}
     return render(request, 'blog/index.html', context)
 
@@ -18,6 +14,7 @@ def index(request):
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
     return render(request, 'blog/post.html', {'post': post})
+
 
 @login_required
 def post_new(request):
@@ -31,6 +28,7 @@ def post_new(request):
     else:
         form = PostForm()
         return render(request, 'blog/post_new.html', {'form': form})
+
 
 @login_required
 def post_edit(request, pk):
@@ -46,6 +44,14 @@ def post_edit(request, pk):
         form = PostForm(instance=post)
     return render(request, 'blog/post_new.html', {'form': form})
 
+
 def show_draft_list(request):
     posts = Post.objects.filter(published_date__isnull=True).order_by('created_date')
     return render(request, 'blog/draft.html', {'posts': posts})
+
+
+def post_publish(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    post.publish()
+    post.save()
+    return redirect('post_detail', pk=pk)
