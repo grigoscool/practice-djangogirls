@@ -1,7 +1,7 @@
 {% extends 'blog/base.html' %}
 {% load static %}
 {% block content %}
-<div class="post-detail">
+<div class="post-detail container">
 	{% if post.published_date %}
 		<h1>{{ post.published_date }}</h1>
 	{% endif %}
@@ -9,6 +9,16 @@
 	<h1>{{ post.text }}</h1>
 	<h1>{{ post.created_date }}</h1>
 	<p><a href="{% url 'post_edit' pk=post.pk %}">edit post</a></p>
+	<p><a href="{% url 'add_comment' pk=post.pk %}">add comment</a></p>
+	<div class="comment container">
+		{% for com in post.comment.all %}
+			<h4 class="comment">Comment #{{ com.pk }}: {{ com.text }}</h4>
+			<h4>Author: {{ com.author }}</h4>
+		{% empty %}
+			<p>No comments here yet :(</p>
+		{% endfor %}
+	</div>
+
 </div>
 
 {% endblock content %}
