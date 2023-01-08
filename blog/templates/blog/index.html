@@ -6,15 +6,16 @@
             <div class="col-md-8">
                 {% for post in posts %}
                     <div class="post">
-                        <div class="date">
+
+                        <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
+                        <p>{{ post.text|linebreaksbr }}</p>
+                         <div class="date">
                             {% if post.published_date %}
                                 <p>Опубликовано: {{ post.published_date }}</p>
                             {% else %}
                                 <a href="{% url 'post_pub' pk=post.pk %}">Publish</a>
                             {% endif %}
                         </div>
-                        <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
-                        <p>{{ post.text|linebreaksbr }}</p>
                         <a href="{% url 'post_remove' pk=post.pk %}">delete post</a>
                         <div class="comment">
 
