@@ -13,7 +13,7 @@
 	<div class="comment container">
 		{% for com in post.comment.all %}
 			<h4 class="comment">Comment #{{ com.pk }}: {{ com.text }}</h4>
-			<h4>Author: {{ com.author }}</h4>
+			<h4>Author: {{ com.author }} <a href="{% url 'comment_remove' pk=com.pk %}">delete comment</a></h4>
 		{% empty %}
 			<p>No comments here yet :(</p>
 		{% endfor %}
